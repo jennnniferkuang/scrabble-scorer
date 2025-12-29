@@ -21,15 +21,20 @@ def register_players():
 def create_letter_array(word):
     letter_array = []
     i = 0
-    while i < (len(word) - 1):
+    while i < len(word):
         letter = word[i]
-        lookahead = word[i + 1]
-        if lookahead.isdigit():
-            letter_array.append((letter, int(lookahead)))
-            i += 2 # skip lookahead
+        if (i + 1) < len(word):
+            lookahead = word[i + 1]
+            if lookahead.isdigit():
+                letter_array.append((letter, int(lookahead)))
+                i += 2 # skip lookahead
+            else:
+                letter_array.append((letter, 1))
+                i += 1
         else:
             letter_array.append((letter, 1))
             i += 1
+    print(letter_array)
     return letter_array
 
 def calculate_scrabble_score(player, word, multipliers):
@@ -61,7 +66,7 @@ def apply_multipliers(word_score, multipliers):
 def print_final_scores():
     print("-----FINAL SCORES-----")
     for player in PLAYER_SCORES:
-        print(player + ": " + PLAYER_SCORES[player])
+        print(player + ": " + str(PLAYER_SCORES[player]))
     return
 
 
@@ -74,7 +79,7 @@ def main():
     register_players()
 
     while(True):
-        user_input = input("input (type 'END GAME' to quit: ")
+        user_input = input("input (type 'END GAME' to quit): ")
 
         if user_input == "END GAME":
             print_final_scores()
